@@ -19,7 +19,7 @@ WORKDIR /home/user/code/apache-spark
 RUN makepkg -si --noconfirm
 
 USER root
-RUN archlinux-java set java-7-openjdk
+#RUN archlinux-java set java-7-openjdk
 
 USER user
 RUN rm -r /home/user/code
@@ -29,12 +29,13 @@ WORKDIR /home/user/
 #RUN export PATH=home/user/anaconda/bin:$PATH
 #RUN rm -r /home/user/Anaconda3-2019.03-Linux-x86_64.sh
 
-RUN echo 'export JAVA_HOME=/usr/lib/jvm/java-7-openjdk/jre' >> /home/user/.bashrc
+#RUN echo 'export JAVA_HOME=/usr/lib/jvm/java-7-openjdk/jre' >> /home/user/.bashrc
 RUN echo 'export SPARK_HOME=/opt/apache-spark'  >> /home/user/.bashrc
 #RUN export PYSPARK_PYTHON=/home/user/anaconda/bin/python
 RUN echo 'export PYTHONPATH=$SPARK_HOME/python/:$PYTHONPATH'  >> /home/user/.bashrc
 RUN echo 'export PYTHONPATH=$SPARK_HOME/python/lib/py4j-0.10.7-src.zip:$PYTHONPATH'  >> /home/user/.bashrc
+RUN source /home/user/.bashrc
 
-WORKDIR /home/user/notebooks
+WORKDIR /home/user/
 CMD [ "echo", 'Welcome to SparkArchlinux containner fell free to contribute' ]
 CMD jupyter notebook --no-browser --ip 0.0.0.0 --port 8888 notebooks
