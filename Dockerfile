@@ -1,6 +1,7 @@
 FROM archlinux/base
 
 LABEL maintainer="emanuelfontelles@hotmail.com"
+
 RUN useradd -m -g users -G wheel user
 RUN passwd -d user 
 RUN mkdir /home/user/code
@@ -28,13 +29,12 @@ WORKDIR /home/user/
 #RUN export PATH=home/user/anaconda/bin:$PATH
 #RUN rm -r /home/user/Anaconda3-2019.03-Linux-x86_64.sh
 
-RUN export JAVA_HOME=/usr/lib/jvm/java-7-openjdk/jre
-RUN export SPARK_HOME=/opt/apache-spark
+RUN echo 'export JAVA_HOME=/usr/lib/jvm/java-7-openjdk/jre' >> /home/user/.bashrc
+RUN echo 'export SPARK_HOME=/opt/apache-spark'  >> /home/user/.bashrc
 #RUN export PYSPARK_PYTHON=/home/user/anaconda/bin/python
-RUN export PYTHONPATH=$SPARK_HOME/python/:$PYTHONPATH
-RUN export PYTHONPATH=$SPARK_HOME/python/lib/py4j-0.10.7-src.zip:$PYTHONPATH
+RUN echo 'export PYTHONPATH=$SPARK_HOME/python/:$PYTHONPATH'  >> /home/user/.bashrc
+RUN echo 'export PYTHONPATH=$SPARK_HOME/python/lib/py4j-0.10.7-src.zip:$PYTHONPATH'  >> /home/user/.bashrc
 
-
-WORKDIR /home/user/
+WORKDIR /home/user/notebooks
 CMD [ "echo", 'Welcome to SparkArchlinux containner fell free to contribute' ]
 CMD jupyter notebook --no-browser --ip 0.0.0.0 --port 8888 notebooks
